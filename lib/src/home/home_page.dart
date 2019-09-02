@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
           if (!snapshot.hasData) {
             return Container();
           } else {
-            return ListView.builder(
+            return ListView.separated(
+                separatorBuilder: (context,index)=>Divider(),
               itemCount: snapshot.data.length,
               itemBuilder: (context, i) => ListTile(
                 onTap: () => Navigator.of(context).push(

@@ -14,14 +14,12 @@ class MovieModule extends ModuleWidget {
 
   @override
   List<Bloc> get blocs => [
-        Bloc((i) => MovieBloc(
-              AppModule.to.get<HasuraRepository>(),
-              category: category,
-            )),
+        Bloc((i) => MovieBloc(i.get<HasuraRepository>(), category: category)),
       ];
 
   @override
-  List<Dependency> get dependencies => [];
+  List<Dependency> get dependencies =>
+      [Dependency((i) => AppModule.to.get<HasuraRepository>())];
 
   @override
   Widget get view => MoviePage();
