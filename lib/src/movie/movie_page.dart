@@ -24,7 +24,7 @@ class _MoviePageState extends State<MoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Movie"),
+        title: Text(bloc.category.name),
       ),
       body: Container(
         child: StreamBuilder<List<MovieModel>>(
@@ -46,13 +46,16 @@ class _MoviePageState extends State<MoviePage> {
                       fit: BoxFit.fill,
                     ),
                     footer: Container(
-                      decoration: BoxDecoration(),
+                      decoration: BoxDecoration(
+                        color: Colors.black54
+                      ),
                       child: Text(snapshot.data[index].videoTitle),
                     ),
                   );
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, mainAxisSpacing: 2, crossAxisSpacing: 2),
+                    childAspectRatio: 2/3,
+                    crossAxisCount: 2, mainAxisSpacing: 4, crossAxisSpacing: 4),
               );
             }),
       ),

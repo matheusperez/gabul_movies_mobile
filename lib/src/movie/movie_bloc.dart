@@ -10,6 +10,7 @@ class MovieBloc extends BlocBase {
 
   MovieBloc(this.hasura,{this.category}){
     movieStream = hasura.getMovies(category);
+    movieStream.changeVariable({'categoryId':category.id});
   }
 
 
@@ -18,7 +19,7 @@ class MovieBloc extends BlocBase {
     //dispose will be called automatically by closing its streams
   @override
   void dispose() {
-    movieStream.close();
+    //movieStream.close();
     super.dispose();
   }
 }

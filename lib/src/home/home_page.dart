@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     //app.getList();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Gabus Movies"),
       ),
       body: Container(
           child: StreamBuilder<List<CategoryModel>>(

@@ -33,8 +33,12 @@ class HasuraRepository {
 
   Snapshot<List<MovieModel>> getMovies(CategoryModel category) {
     try {
+
+      print('````');
+      print(category.id);
+      print('````');
       String query = '''subscription getMovies(\$categoryId:Int!){
-                          posts(where: {cat_id: {_eq: 50}}, order_by: {video_title: asc}) {
+                          posts(where: {cat_id: {_eq: \$categoryId}}, order_by: {video_title: asc}) {
                             id
                             cat_id
                             video_title
