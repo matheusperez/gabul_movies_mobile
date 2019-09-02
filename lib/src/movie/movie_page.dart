@@ -26,38 +26,49 @@ class _MoviePageState extends State<MoviePage> {
       appBar: AppBar(
         title: Text(bloc.category.name),
       ),
-      body: Container(
-        child: StreamBuilder<List<MovieModel>>(
-            stream: bloc.movieStream.stream,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+      body: StreamBuilder<bool>(
+        stream: bloc.isLoadingController.stream,
+        initialData: true,
+        builder: (context, snapshot) {
 
-              return GridView.builder(
-                controller: scrollController,
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GridTile(
-                    child: Image.network(
-                      '$URL_DOWNLOAD${snapshot.data[index].videoThumbnail}',
-                      fit: BoxFit.fill,
-                    ),
-                    footer: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black54
-                      ),
-                      child: Text(snapshot.data[index].videoTitle),
-                    ),
+          if(snapshot.data){
+            return Container(child: Center(child: CircularProgressIndicator(),),);
+          }
+
+          return Container(
+            child: StreamBuilder<List<MovieModel>>(
+                stream: bloc.movieStream.stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  return GridView.builder(
+                    controller: scrollController,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GridTile(
+                        child: Image.network(
+                          '$URL_DOWNLOAD${snapshot.data[index].videoThumbnail}',
+                          fit: BoxFit.cover,
+                        ),
+                        footer: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black54
+                          ),
+                          child: Text(snapshot.data[index].videoTitle),
+                        ),
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 2/3,
+                        crossAxisCount: 2, mainAxisSpacing: 4, crossAxisSpacing: 4),
                   );
-                },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 2/3,
-                    crossAxisCount: 2, mainAxisSpacing: 4, crossAxisSpacing: 4),
-              );
-            }),
+                }),
+          );
+        }
       ),
     );
   }
